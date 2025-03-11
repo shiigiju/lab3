@@ -1,0 +1,108 @@
+public class Product {
+    private String name; // Название товара
+    private double costPrice; // Себестоимость
+    private double currentPrice; // Текущая цена
+    private double[] priceHistory; // История изменений цен (фиксированный размер)
+    private int historyIndex; // Текущий индекс в истории
+    private boolean allowBelowCost; // Флаг разрешения продажи ниже себестоимости
+
+    // Конструктор
+    public Product(String name, double costPrice, double initialPrice) {
+        this.name = name;
+        this.costPrice = costPrice;
+        this.currentPrice = Math.max(initialPrice, costPrice);
+        this.priceHistory = new double[10]; // Храним максимум 10 последних цен
+        this.priceHistory[0] = this.currentPrice;
+        this.priceCount = 1;
+        this.allowBelowCost = false;
+    }
+    // Конструктор только по названию и себестоимости
+    public Product(String name, double costPrice) {
+        this(name, costPrice, costPrice);
+    }
+    // Запись новой цены в историю
+    private void recordPrice(double newPrice) {
+        if (priceCount < priceHistory.length) {
+            priceHistory[priceCount] = newPrice;
+            priceCount = priceCount + 1;
+        }
+    }
+    
+    //Изменение цены товара
+    public void changePrice(double newPrice) {
+        if (allowBelowCost || newPrice >= costPrice) {
+            currentPrice = newPrice;
+            recordPrice(newPrice);
+        }
+    }
+
+    // Добавление наценки в процентах
+    public void addMarkup(double percent){
+        changePrice(currentPrice * (1 + percent / 100));
+    }
+    
+    // Добавление скидки в процентах
+    public void addDiscount(double percent) {
+        changePrice(currentPrice * (1 - percent / 100));
+    }
+    
+    // Увеличение или уменьшение цены товара на указанное число
+    public void changeFixCost(double amount) {
+        double newPrice = currentPrice + amount;
+        if (allowBelowCost || newPrice >= costPrice) {
+            currentPrice = newPrice;
+        }
+    }
+
+    // Вычисление средней цены товара
+    public double getAveragePrice() {
+        double sum = 0;
+        int count = 0;
+        for (int i = 0; i < priceCount; i++) {
+            sum = sum + priceHistory[i];
+            count = count + 1;
+        }
+        if (count == 0) {
+            return 0;
+        }
+        return sum / count;
+    }
+    
+    // Вычисление средней наценки товара
+    public double getAverageProfit() {
+        double sum = 0;
+        int count = 0;
+        for (int i = 0; i < priceCount; i++) {
+            sum = sum + priceHistory[i] - costPrice;
+            count = count + 1;
+        }
+        if (count == 0) {
+            return 0;
+        }
+        return sum / count;
+    }
+
+    // Вывод истории изменения цен
+    public void printPriceHistory() {
+        System.out.print("История цен: ");
+        for (int i = 0; i < historyIndex; i++) {
+            System.out.print(priceHistory[i] + " ");
+        }
+        System.out.println();
+    }
+
+    // Разрешение или запрет продаж ниже себестоимости
+    public void allowSellingBelowCost(boolean allow) {
+        this.allowBelowCost = allow;
+    }
+
+    // Вычисление возможной выручки при продаже указанного количества товара
+    public double calculateRevenue(int quantity) {
+        return quantity * currentPrice;
+    }
+    // Вывод информации о товаре
+    @Override
+    public String toString() {
+        return "Товар: " + name + ", Себестоимость: " + costPrice + ", Текущая цена: " + currentPrice;
+    }
+}
