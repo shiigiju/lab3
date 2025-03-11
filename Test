@@ -1,0 +1,50 @@
+public class Main {
+    public static void main(String[] args) {
+        // Создание товара "Телевизор" с себестоимостью 20000 и ценой 25000
+        Product tv = new Product("Телевизор", 20000, 25000);
+
+        // Вывод информации о товаре
+        System.out.println(tv.name, tv.costPrice, tv.currentPrice);
+
+        // Изменение цены
+        tv.changePrice(23000);
+        System.out.print("Новая цена: ", tv.currentPrice);
+
+        // Применение скидки 10%
+        tv.addDiscount(10);
+        System.out.print("Цена после скидки 10%: ", tv.currentPrice);
+        
+        // Наценка 20%
+        tv.addMarkup(20);
+        System.out.print("Цена после наценки 20%: ", tv.currentPrice);
+
+        // Изменение цены на фиксированное значение (+2000)
+        tv.changeFixCost(2000);
+        System.out.print("Цена после увеличения на 2000: ", tv.currentPrice);
+        
+        //Попытка уменьшить цену ниже себестоимости
+        tv.changePrice(18000);
+        System.out.print("Попытка установить цену 18000 при запрете продаж ниже себестоимости: ");
+        System.out.println(tv.currentPrice);
+
+        //  Включение разрешения продажи ниже себестоимости 
+        tv.allowSellingBelowCost(true);
+        tv.changePrice(15000);
+        System.out.print("Цена после разрешения продаж ниже себестоимости: ", tv.currentPrice);
+
+        // Вычисление средней цены
+        System.out.print("Средняя цена товара: ", tv.getAveragePrice());
+        
+        // Вычисление средней наценки
+        System.out.print("Средняя наценка товара: ", tv.getAverageProfit());
+
+        // Расчёт возможной выручки (если продадим 100 единиц)
+        double revenue = tv.calculateRevenue(100);
+        System.out.print("Возможная выручка при продаже 100 единиц: ");
+        System.out.println(revenue);
+
+        // Вывод истории цен
+        System.out.println("История изменения цен:");
+        tv.printPriceHistory();
+    }
+}
