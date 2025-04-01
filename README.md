@@ -70,6 +70,7 @@ public class Product {
     private double[] priceHistory; // История изменений цен (фиксированный размер)
     private int historyIndex; // Текущий индекс в истории
     private boolean allowBelowCost; // Флаг разрешения продажи ниже себестоимости
+    priivate int priceCount = 1;
 
     // Конструктор
     public Product(String name, double costPrice, double initialPrice) {
@@ -78,7 +79,6 @@ public class Product {
         this.currentPrice = Math.max(initialPrice, costPrice);
         this.priceHistory = new double[10]; // Храним максимум 10 последних цен
         this.priceHistory[0] = this.currentPrice;
-        this.priceCount = 1;
         this.allowBelowCost = false;
     }
     // Конструктор только по названию и себестоимости
