@@ -147,7 +147,7 @@ public class Product {
     // Вывод истории изменения цен
     public void printPriceHistory() {
         System.out.print("История цен: ");
-        for (int i = 0; i < historyIndex; i++) {
+        for (int i = 0; i < priceCount; i++) {
             System.out.print(priceHistory[i] + " ");
         }
         System.out.println();
