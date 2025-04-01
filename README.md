@@ -70,7 +70,7 @@ public class Product {
     private double[] priceHistory; // История изменений цен (фиксированный размер)
     private int historyIndex; // Текущий индекс в истории
     private boolean allowBelowCost; // Флаг разрешения продажи ниже себестоимости
-    priivate int priceCount = 1;
+    private int priceCount = 1;
 
     // Конструктор
     public Product(String name, double costPrice, double initialPrice) {
