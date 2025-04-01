@@ -170,7 +170,7 @@ public class Product {
 }
 ```
 ### 5. Анализ правильности решения
-```
+```java
 public class Test {
     public static void main(String[] args) {
         // Создание товара "Телевизор" с себестоимостью 20000 и ценой 25000
